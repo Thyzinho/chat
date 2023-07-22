@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilo.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>CHAT</h1>
+        <div class="chat">
+            {% for usuario, mensagem, cor in mensagens %}
+            <div class="mensagem">
+                <strong style="color:  cor ">{{ usuario }}:</strong> {{ mensagem }}
+            </div>
+            {% endfor %}
+        </div>
+        <form id="form_chat" onsubmit="return false;">
+            <input type="text" id="usuario" name="usuario" value="{{ mensagens[-1][0] if mensagens else '' }}" placeholder="Seu nome de usuário" required>
+            <input type="text" id="mensagem" name="mensagem" placeholder="Digite sua mensagem" required>
+            <input type="button" value="Enviar" onclick="enviarMensagem()">
+        </form>
+    </div>
+
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // Função para gerar uma cor aleatória em formato hexadecimal (#RRGGBB)
+        function gerarCorAleatoria() {
+            var letras = '0123456789ABCDEF';
+            var cor = '#';
+            for (var i = 0; i < 6; i++) {
+                cor += letras[Math.floor(Math.random() * 16)];
+            }
+            return cor;
+        }
+
+        function enviarMensagem() {
+            var usuario = document.getElementById('usuario').value;
+            var mensagem = document.getElementById('mensagem').value;
+            var cor = gerarCorAleatoria(); // Gera uma cor aleatória para o nome de usuário
+            socket.emit('enviar_mensagem', {
+                usuario: usuario,
+                mensagem: mensagem,
+                cor: cor
+            });
+            document.getElementById('mensagem').value = '';
+        }
+
+        socket.on('mensagem_recebida', function(data) {
+            var chatDiv = document.getElementsByClassName('chat')[0];
+            var mensagemDiv = document.createElement('div');
+            mensagemDiv.className = 'mensagem';
+            var strong = document.createElement('strong');
+            strong.innerText = data.usuario + ':';
+            strong.style.color = data.cor; // Define a cor recebida para o nome de usuário
+            mensagemDiv.appendChild(strong);
+            var mensagem = document.createTextNode(' ' + data.mensagem);
+            mensagemDiv.appendChild(mensagem);
+            chatDiv.appendChild(mensagemDiv);
+        });
+    </script>
+</body>
+
+</html>

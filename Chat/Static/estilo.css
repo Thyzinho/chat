@@ -1,0 +1,122 @@
+/* Reset de estilos para evitar conflitos */
+
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eeeeee;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    color: rgb(54, 54, 54);
+    align-self: center;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 150px;
+    color: rgb(41, 41, 41);
+    font-weight: bold;
+}
+
+.chat {
+    border-radius: 25px;
+    background: #d3d3d3;
+    padding: 20px;
+    width: 750px;
+    height: 150px;
+}
+
+.mensagem {
+    margin-bottom: 10px;
+    color: rgb(70, 70, 70);
+    font-family: Roboto, sans-serif;
+    text-align: left;
+}
+
+.nome-usuario {
+    font-weight: bold;
+    color: rgb(40, 0, 151);
+}
+
+#form_chat {
+    margin-top: 10px;
+    display: flex;
+    align-self: center;
+}
+
+#usuario,
+#mensagem {
+    flex: 1;
+    padding: 5px;
+    font-size: 16px;
+}
+
+#mensagem {
+    margin-right: 10px;
+    color: rgb(0, 0, 0);
+}
+
+input[type="button"] {
+    background-color: #70f074;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s, color 0.3s;
+    font-family: Roboto;
+    border-radius: 25px;
+    padding: 20px;
+    width: 100px;
+    height: 50px;
+}
+
+input[type="button"]:hover {
+    background-color: #48aa4d;
+    transform: translateY(-4px);
+}
+
+@keyframes fadeIn {
+    from {
+        transform: translateX(-15px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0px);
+        opacity: 100;
+    }
+}
+
+.chat .mensagem {
+    animation: fadeIn 0.4s;
+    /* Aplica a animação de fadeIn a todas as mensagens */
+    margin-bottom: 3px;
+    margin-left: 10px;
+}
+
+.chat {
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-height: 400px;
+    /* Altura máxima da caixa de chat */
+    overflow-y: scroll;
+    /* Adiciona uma barra de rolagem quando o conteúdo ultrapassar a altura máxima */
+}
+
+.mensagem {
+    margin-bottom: 10px;
+}
